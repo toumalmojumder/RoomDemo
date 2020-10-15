@@ -22,13 +22,13 @@ interface SubscriberDAO {
 */
 
     @Update
-    suspend fun updateSubscriber(subscriber: Subscriber)
+    suspend fun updateSubscriber(subscriber: Subscriber):Int
 
     @Delete
-    suspend fun deleteSubscriber(subscriber: Subscriber)
+    suspend fun deleteSubscriber(subscriber: Subscriber) :Int
 
     @Query("DELETE FROM SUBSCRIBER_DATA_TABLE")
-    suspend fun deleteAll()
+    suspend fun deleteAll() :Int
 
     @Query("SELECT * FROM SUBSCRIBER_DATA_TABLE")
     fun getAllSubscriber():LiveData<List<Subscriber>>

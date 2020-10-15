@@ -10,10 +10,10 @@ import com.toumal.roomdemo.generated.callback.OnClickListener
 import java.util.concurrent.Flow
 
 class MyRecyclerViewAdapter(
-    private val subscribersList: List<Subscriber>,
     private val clickListener: (Subscriber)->Unit):
     RecyclerView.Adapter<MyViewHolder>() {
 
+    private val subscribersList = ArrayList<Subscriber>()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
        val layoutInflater:LayoutInflater = LayoutInflater.from(parent.context)
         val binding: ListItemBinding =
@@ -27,6 +27,10 @@ class MyRecyclerViewAdapter(
 
     override fun getItemCount(): Int {
         return subscribersList.size
+    }
+    fun setList(subscribers: List<Subscriber>){
+        subscribersList.clear()
+        subscribersList.addAll(subscribers)
     }
 }
 class MyViewHolder(val binding: ListItemBinding):RecyclerView.ViewHolder(binding.root){
