@@ -6,6 +6,7 @@ import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.toumal.roomdemo.databinding.ActivityMainBinding
 import com.toumal.roomdemo.db.SubscriberDatabase
 import com.toumal.roomdemo.db.SubscriberRepository
@@ -25,11 +26,18 @@ class MainActivity : AppCompatActivity() {
         subscriberViewModel = ViewModelProvider(this,factory).get(SubscriberViewModel::class.java)
         binding.myViewModel =subscriberViewModel
         binding.lifecycleOwner =this
+        initRecyclerView()
+    }
+    private fun initRecyclerView(){
+        binding.subscriberRecyclerView.layoutManager = LinearLayoutManager(this)
         displaySubscribersList()
     }
+
+
     private fun displaySubscribersList(){
         subscriberViewModel.subscribers.observe(this, Observer {
             Log.i("Mytag",it.toString())
+            binding.subscriberRecyclerView.adapter = MyRecyclerViewAdapter(it)
         })
     }
 }
