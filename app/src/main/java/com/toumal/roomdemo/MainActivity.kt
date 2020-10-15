@@ -3,11 +3,13 @@ package com.toumal.roomdemo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.toumal.roomdemo.databinding.ActivityMainBinding
+import com.toumal.roomdemo.db.Subscriber
 import com.toumal.roomdemo.db.SubscriberDatabase
 import com.toumal.roomdemo.db.SubscriberRepository
 
@@ -37,7 +39,12 @@ class MainActivity : AppCompatActivity() {
     private fun displaySubscribersList(){
         subscriberViewModel.subscribers.observe(this, Observer {
             Log.i("Mytag",it.toString())
-            binding.subscriberRecyclerView.adapter = MyRecyclerViewAdapter(it)
+            binding.subscriberRecyclerView.adapter = MyRecyclerViewAdapter(it,{selectedItem:Subscriber->listItemClicked(selectedItem)})
         })
     }
+    private fun listItemClicked(subscriber: Subscriber){
+        Toast.makeText(this,"Selected name is ${subscriber.name}",Toast.LENGTH_LONG).show()
+        subscriberViewModel.initUpdateAndDelete(subscriber)
+    }
+
 }
